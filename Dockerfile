@@ -47,7 +47,7 @@ RUN chmod u+x \
     /usr/local/bin/dfg.sh
 
 RUN chmod u+x  /start.sh && \
-    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
 
 ENV SMTP_USER="" \
     SMTP_PASS="" \

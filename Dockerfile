@@ -56,6 +56,7 @@ ENV SMTP_USER="" \
     MY_DOMAIN="" \
     DEFAULT_EMAIL="" \
     ALLOWED_SENDER_DOMAINS="" \
+    SMTP_HELO_NAME="" \
     ADD_HEADERS=""
 
 VOLUME  [ "/data" ]

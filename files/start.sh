@@ -7,6 +7,7 @@ ALLOWED_SENDER_DOMAINS=${ALLOWED_SENDER_DOMAINS:-""}
 HOST_NAME=${HOST_NAME:-""}
 ADD_HEADERS=${ADD_HEADERS:-""}
 DEFAULT_EMAIL=${DEFAULT_EMAIL:-""}
+SMTP_HELO_NAME=${SMTP_HELO_NAME:-""}
 
 mkdir -p /data/postfix_spool
 mkdir -p /data/postfix_config
@@ -127,6 +128,10 @@ if [[ ! -z "${ADD_HEADERS}" ]]; then
 fi
 
 postconf -e 'message_size_limit = 0'
+
+if [[ ! -z "${SMTP_HELO_NAME}" ]]; then
+  postconf -e "smtp_helo_name = ${SMTP_HELO_NAME}"
+fi
 
 # Use 587 (submission)
 sed -i -r -e 's/^#submission/submission/' /etc/postfix/master.cf

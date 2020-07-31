@@ -62,6 +62,7 @@ if [[ ! -z "${RELAY_HOST}" ]]; then
       postconf -e 'smtp_sasl_tls_security_options=noanonymous'
       postconf -e 'smtp_tls_security_level = encrypt'
       postconf -e 'smtp_use_tls = yes'
+      postconf -e 'smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt'
       postconf -e 'header_size_limit = 4096000'
       postconf -e 'smtp_tls_session_cache_database=btree:${data_directory}/smtp_scache'
 
@@ -131,6 +132,7 @@ postconf -e 'message_size_limit = 0'
 
 if [[ ! -z "${SMTP_HELO_NAME}" ]]; then
   postconf -e "smtp_helo_name = ${SMTP_HELO_NAME}"
+  postconf -e "smtp_always_send_ehlo = yes"
 fi
 
 # Use 587 (submission)

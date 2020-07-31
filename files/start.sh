@@ -55,17 +55,16 @@ fi
 if [[ ! -z "${RELAY_HOST}" ]]; then
     postconf -e relayhost=${RELAY_HOST}
     if [[ ! -z "${SMTP_USER}" ]]; then
-      postconf -e 'smtp_sasl_auth_enable = yes'
-      postconf -e 'smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd'
-#      postconf -e 'smtp_sasl_security_options ='
+      postconf -e 'smtp_sasl_auth_enable=yes'
+      postconf -e 'smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd'
+#      postconf -e 'smtp_sasl_security_options='
       postconf -e 'smtp_sasl_security_options=noanonymous'
       postconf -e 'smtp_sasl_tls_security_options=noanonymous'
-      postconf -e 'smtp_tls_security_level = encrypt'
-      postconf -e 'smtp_use_tls = yes'
-      postconf -e 'smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache'
-      postconf -e 'smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt'
-      postconf -e 'header_size_limit = 4096000'
+      postconf -e 'smtp_tls_security_level=encrypt'
+      postconf -e 'smtp_use_tls=yes'
       postconf -e 'smtp_tls_session_cache_database=btree:${data_directory}/smtp_scache'
+      postconf -e 'smtp_tls_CAfile=/etc/ssl/certs/ca-certificates.crt'
+      postconf -e 'header_size_limit=4096000'
 
       echo "${RELAY_HOST}   ${SMTP_USER}:${SMTP_PASS}" > /etc/postfix/sasl_passwd
       chown root:root /etc/postfix/sasl_passwd
@@ -87,7 +86,7 @@ fi
 ##echo "fd00::/8" >> $network_table
 #postmap $network_table
 #postconf -e mynetworks=hash:$network_table
-postconf -e "mynetworks=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+postconf -e "mynetworks=1 27.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 
 # Split with space
 if [[ ! -z "${ALLOWED_SENDER_DOMAINS}" ]]; then
@@ -95,7 +94,7 @@ if [[ ! -z "${ALLOWED_SENDER_DOMAINS}" ]]; then
     allowed_senders=/etc/postfix/allowed_senders
     rm -f $allowed_senders $allowed_senders.db > /dev/null
     touch $allowed_senders
-    for i in "$ALLOWED_SENDER_DOMAINS"; do
+    for i in ${ALLOWED_SENDER_DOMAINS}; do
         echo -e "\t$i"
         echo -e "$i\tOK" >> $allowed_senders
     done
@@ -115,8 +114,8 @@ if [[ ! -z "${DEFAULT_EMAIL}" ]]; then
 fi
 
 if [[ ! -z "${MY_DOMAIN}" ]]; then
-    postconf -e "mydomain = ${MY_DOMAIN}"
-    postconf -e "sender_canonical_maps = hash:/etc/postfix/canonical"
+    postconf -e "mydomain=${MY_DOMAIN}"
+    postconf -e "sender_canonical_maps=hash:/etc/postfix/canonical"
 
     echo "root@${MY_DOMAIN}   server@${MY_DOMAIN}" > /etc/postfix/canonical
     echo "@${MY_DOMAIN}       server@${MY_DOMAIN}" >> /etc/postfix/canonical
@@ -125,15 +124,15 @@ fi
 
 # Set up host name
 if [[ ! -z "${ADD_HEADERS}" ]]; then
-    postconf -e 'header_checks = regexp:/etc/postfix/my_custom_header'
+    postconf -e 'header_checks=regexp:/etc/postfix/my_custom_header'
     echo "${ADD_HEADERS}" > /etc/postfix/my_custom_header
 fi
 
-postconf -e 'message_size_limit = 0'
+postconf -e 'message_size_limit=0'
 
 if [[ ! -z "${SMTP_HELO_NAME}" ]]; then
-  postconf -e "smtp_helo_name = ${SMTP_HELO_NAME}"
-  postconf -e "smtp_always_send_ehlo = yes"
+  postconf -e "smtp_helo_name=${SMTP_HELO_NAME}"
+  postconf -e "smtp_always_send_ehlo=yes"
 fi
 
 # Use 587 (submission)

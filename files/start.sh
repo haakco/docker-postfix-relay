@@ -118,7 +118,7 @@ if [[ ! -z "${MY_DOMAIN}" ]]; then
     postconf -e "sender_canonical_maps=hash:/etc/postfix/canonical"
 
     echo "root@${MY_DOMAIN}   server@${MY_DOMAIN}" > /etc/postfix/canonical
-    echo "@${MY_DOMAIN}       server@${MY_DOMAIN}" >> /etc/postfix/canonical
+    echo "root@${HOST_NAME}   server@${MY_DOMAIN}" >> /etc/postfix/canonical
     postmap /etc/postfix/canonical
 fi
 

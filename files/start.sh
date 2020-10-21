@@ -8,6 +8,7 @@ HOST_NAME=${HOST_NAME:-""}
 ADD_HEADERS=${ADD_HEADERS:-""}
 DEFAULT_EMAIL=${DEFAULT_EMAIL:-""}
 SMTP_HELO_NAME=${SMTP_HELO_NAME:-""}
+MYNETWORKS=${MYNETWORKS:-"127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"}
 
 mkdir -p /data/postfix_spool
 mkdir -p /data/postfix_config
@@ -86,7 +87,7 @@ fi
 ##echo "fd00::/8" >> $network_table
 #postmap $network_table
 #postconf -e mynetworks=hash:$network_table
-postconf -e "mynetworks=1 27.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+postconf -e "mynetworks=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 
 # Split with space
 if [[ ! -z "${ALLOWED_SENDER_DOMAINS}" ]]; then

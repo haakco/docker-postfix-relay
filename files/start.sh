@@ -9,6 +9,7 @@ ADD_HEADERS=${ADD_HEADERS:-""}
 DEFAULT_EMAIL=${DEFAULT_EMAIL:-""}
 SMTP_HELO_NAME=${SMTP_HELO_NAME:-""}
 MYNETWORKS=${MYNETWORKS:-"127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"}
+SMTP_USE_TLS=${SMTP_USE_TLS:-"TRUE"}
 
 mkdir -p /data/postfix_spool
 mkdir -p /data/postfix_config
@@ -58,22 +59,26 @@ if [[ ! -z "${RELAY_HOST}" ]]; then
     if [[ ! -z "${SMTP_USER}" ]]; then
       postconf -e 'smtp_sasl_auth_enable=yes'
       postconf -e 'smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd'
-#      postconf -e 'smtp_sasl_security_options='
       postconf -e 'smtp_sasl_security_options=noanonymous'
       postconf -e 'smtp_sasl_tls_security_options=noanonymous'
-      postconf -e 'smtp_tls_security_level=encrypt'
-      postconf -e 'smtp_use_tls=yes'
+      postconf -e 'smtpd_tls_session_cache_database=btree:${data_directory}/smtp_scache'
       postconf -e 'smtp_tls_session_cache_database=btree:${data_directory}/smtp_scache'
-      postconf -e 'smtp_tls_CAfile=/etc/ssl/certs/ca-certificates.crt'
       postconf -e 'header_size_limit=4096000'
 
       echo "${RELAY_HOST}   ${SMTP_USER}:${SMTP_PASS}" > /etc/postfix/sasl_passwd
       chown root:root /etc/postfix/sasl_passwd
       chmod 600 /etc/postfix/sasl_passwd
       postmap /etc/postfix/sasl_passwd
+      SMTP_USE_TLS="TRUE"
     fi
 else
     postconf -e relayhost
+fi
+
+if [[ "${SMTP_USE_TLS}" = "TRUE" ]]; then
+    postconf -e 'smtp_tls_security_level=encrypt'
+    postconf -e 'smtp_use_tls=yes'
+    postconf -e 'smtp_tls_CAfile=/etc/ssl/certs/ca-certificates.crt'
 fi
 
 # Set up my networks to list only networks in the local loopback range

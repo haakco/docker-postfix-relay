@@ -61,7 +61,7 @@ if [[ ! -z "${RELAY_HOST}" ]]; then
       postconf -e 'smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd'
       postconf -e 'smtp_sasl_security_options=noanonymous'
       postconf -e 'smtp_sasl_tls_security_options=noanonymous'
-      postconf -e 'smtpd_tls_session_cache_database=btree:${data_directory}/smtp_scache'
+      postconf -e 'smtpd_tls_session_cache_database=btree:${data_directory}/smtpd_scache'
       postconf -e 'smtp_tls_session_cache_database=btree:${data_directory}/smtp_scache'
       postconf -e 'header_size_limit=4096000'
 

@@ -23,12 +23,15 @@ RUN apk add --no-cache --update \
         bash busybox-extras \
         ca-certificates\
         cyrus-sasl cyrus-sasl-dev  cyrus-sasl-crammd5 cyrus-sasl-login cyrus-sasl-digestmd5 cyrus-sasl-scram libgsasl \
-        libsasl cyrus-sasl-gssapiv2 cyrus-sasl-gs2 cyrus-sasl-openrc cyrus-sasl-ntlm cyrus-sasl-plain \
+        libsasl cyrus-sasl-gssapiv2 cyrus-sasl-gs2 cyrus-sasl-openrc cyrus-sasl-ntlm \
         mailx \
         postfix \
         rsyslog \
         supervisor && \
-    apk add --no-cache --update \
+    rm -rf /tmp/* && \
+    rm -rf /var/cache/apk/*
+
+RUN apk add --no-cache --update \
         pcre icu-libs \
         db libpq \
         libsasl \

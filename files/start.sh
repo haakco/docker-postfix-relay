@@ -16,6 +16,9 @@ mkdir -p /data/postfix_config
 mkdir -p /data/logs/supervisor
 mkdir -p /data/logs/postfix
 
+# Clean old config
+rm -rf /data/postfix_config/*
+
 if [[ ! -f /data/postfix_config/main.cf ]]; then
   mv /etc/postfix/* /data/postfix_config/
 fi
@@ -92,7 +95,7 @@ fi
 ##echo "fd00::/8" >> $network_table
 #postmap $network_table
 #postconf -e mynetworks=lmdb:$network_table
-postconf -e "mynetworks=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+postconf -e "mynetworks=${MYNETWORKS}"
 
 # Split with space
 if [[ ! -z "${ALLOWED_SENDER_DOMAINS}" ]]; then

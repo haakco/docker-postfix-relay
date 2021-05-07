@@ -25,7 +25,7 @@ RUN apk add --no-cache --update \
         cyrus-sasl cyrus-sasl-dev  cyrus-sasl-crammd5 cyrus-sasl-login cyrus-sasl-digestmd5 cyrus-sasl-scram \
         cyrus-sasl-gssapiv2 cyrus-sasl-gs2 cyrus-sasl-openrc cyrus-sasl-ntlm \
         libgsasl libsasl lmdb lmdb-tools \
-        mailx \
+        mailx heirloom-mailx \
         postfix \
         rsyslog \
         supervisor && \

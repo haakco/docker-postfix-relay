@@ -22,8 +22,9 @@ ARG HTTP_PROXY=""
 RUN apk add --no-cache --update \
         bash busybox-extras \
         ca-certificates\
-        cyrus-sasl cyrus-sasl-dev  cyrus-sasl-crammd5 cyrus-sasl-login cyrus-sasl-digestmd5 cyrus-sasl-scram libgsasl \
-        libsasl cyrus-sasl-gssapiv2 cyrus-sasl-gs2 cyrus-sasl-openrc cyrus-sasl-ntlm \
+        cyrus-sasl cyrus-sasl-dev  cyrus-sasl-crammd5 cyrus-sasl-login cyrus-sasl-digestmd5 cyrus-sasl-scram \
+        cyrus-sasl-gssapiv2 cyrus-sasl-gs2 cyrus-sasl-openrc cyrus-sasl-ntlm \
+        libgsasl libsasl lmdb lmdb-tools \
         mailx \
         postfix \
         rsyslog \

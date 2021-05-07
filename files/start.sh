@@ -26,36 +26,36 @@ ln -sf /data/postfix_config /etc/postfix
 rm -rf /var/spool/postfix
 ln -sf /data/postfix_spool /var/spool/postfix
 
-postconf -e daemon_directory=/usr/libexec/postfix
+postconf -e "daemon_directory=/usr/libexec/postfix"
 
-postconf -e queue_directory=/data/postfix_spool
+postconf -e "queue_directory=/data/postfix_spool"
 
 # Disable SMTPUTF8, because libraries (ICU) are missing in alpine
-postconf -e smtputf8_enable=no
+postconf -e "smtputf8_enable=no"
 
 # Update aliases database. It's not used, but postfix complains if the .db file is missing
 postalias /etc/postfix/aliases
 
 # Disable local mail delivery
-postconf -e mydestination=
+postconf -e "mydestination="
 # Don't relay for any domains
-postconf -e relay_domains=
+postconf -e "relay_domains="
 
 # Reject invalid HELOs
-postconf -e smtpd_delay_reject=yes
-postconf -e smtpd_helo_required=yes
+postconf -e "smtpd_delay_reject=yes"
+postconf -e "smtpd_helo_required=yes"
 postconf -e "smtpd_helo_restrictions=permit_mynetworks,reject_invalid_helo_hostname,permit"
 
 # Set up host name
 if [[ ! -z "${HOST_NAME}" ]]; then
-    postconf -e myhostname=${HOST_NAME}
+    postconf -e "myhostname=${HOST_NAME}"
 else
-    postconf -e myhostname=${HOSTNAME}
+    postconf -e "myhostname=${HOSTNAME}"
 fi
 
 # Set up a relay host, if needed
 if [[ ! -z "${RELAY_HOST}" ]]; then
-    postconf -e relayhost=${RELAY_HOST}
+    postconf -e "relayhost=${RELAY_HOST}"
     if [[ ! -z "${SMTP_USER}" ]]; then
       postconf -e 'smtp_sasl_auth_enable=yes'
       postconf -e 'smtp_sasl_password_maps=lmdb:/etc/postfix/sasl_passwd'

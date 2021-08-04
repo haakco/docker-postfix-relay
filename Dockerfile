@@ -1,5 +1,5 @@
+# syntax = docker/dockerfile:1.2
 FROM alpine
-
 
 # You can set this variables when running the image to override the host name or
 # foward the messages to another server
@@ -19,7 +19,8 @@ ENV LANG="en_US.UTF-8" \
 ARG HTTPS_PROXY=""
 ARG HTTP_PROXY=""
 
-RUN apk add --no-cache --update \
+RUN --mount=type=cache,id=apk,target=/var/cache/apk \
+    apk add --update \
         bash busybox-extras \
         ca-certificates\
         cyrus-sasl cyrus-sasl-dev  cyrus-sasl-crammd5 cyrus-sasl-login cyrus-sasl-digestmd5 cyrus-sasl-scram \
@@ -28,17 +29,14 @@ RUN apk add --no-cache --update \
         mailx heirloom-mailx \
         postfix \
         rsyslog \
-        supervisor && \
-    rm -rf /tmp/* && \
-    rm -rf /var/cache/apk/*
+        supervisor
 
-RUN apk add --no-cache --update \
+RUN --mount=type=cache,id=apk,target=/var/cache/apk \
+    apk add --update \
         pcre icu-libs \
         db libpq \
         libsasl \
-        libldap && \
-    rm -rf /tmp/* && \
-    rm -rf /var/cache/apk/*
+        libldap
 
 COPY ./files/supervisord.conf /supervisord.conf
 COPY ./files/rsyslog.conf /etc/rsyslog.conf

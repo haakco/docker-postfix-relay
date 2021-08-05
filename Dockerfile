@@ -33,6 +33,7 @@ RUN --mount=type=cache,sharing=locked,id=apk,target=/var/cache/apk \
         supervisor
 
 RUN --mount=type=cache,sharing=locked,id=apk,target=/var/cache/apk \
+    apk update -U && \
     apk add --update \
         pcre icu-libs \
         db libpq \

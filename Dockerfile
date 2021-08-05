@@ -1,5 +1,5 @@
 # syntax = docker/dockerfile:1.2
-FROM alpine
+FROM alpine:edge
 
 # You can set this variables when running the image to override the host name or
 # foward the messages to another server
@@ -20,6 +20,7 @@ ARG HTTPS_PROXY=""
 ARG HTTP_PROXY=""
 
 RUN --mount=type=cache,sharing=locked,id=apk,target=/var/cache/apk \
+    apk update -U && \
     apk add --update \
         bash busybox-extras \
         ca-certificates\

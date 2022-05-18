@@ -25,7 +25,7 @@ ENV LANG="en_US.UTF-8" \
 ARG HTTPS_PROXY=""
 ARG HTTP_PROXY=""
 
-RUN --mount=type=cache,sharing=locked,id=apk,target=/var/cache/apk \
+RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
     apk update -U && \
     apk add --update \
         bash busybox-extras \
@@ -38,7 +38,7 @@ RUN --mount=type=cache,sharing=locked,id=apk,target=/var/cache/apk \
         rsyslog \
         supervisor
 
-RUN --mount=type=cache,sharing=locked,id=apk,target=/var/cache/apk \
+RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
     apk update -U && \
     apk add --update \
         pcre icu-libs \

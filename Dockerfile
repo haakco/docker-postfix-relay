@@ -25,8 +25,8 @@ ENV LANG="en_US.UTF-8" \
 ARG HTTPS_PROXY=""
 ARG HTTP_PROXY=""
 
-RUN apk update -U && \
-    apk add \
+RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
+    apk add -U \
         bash busybox-extras \
         ca-certificates \
         mailx heirloom-mailx \

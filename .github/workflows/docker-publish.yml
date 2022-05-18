@@ -40,7 +40,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          pull: true
           push: true
           build-args: |
             BASE_IMAGE_NAME=alpine

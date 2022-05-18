@@ -1,5 +1,11 @@
-# syntax = docker/dockerfile:1.2
-FROM alpine:edge
+# syntax=docker/dockerfile:1
+ARG BASE_IMAGE_NAME=""
+ARG BASE_IMAGE_TAG=""
+
+FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG} as builder
+
+ARG BASE_IMAGE_NAME=""
+ARG BASE_IMAGE_TAG=""
 
 # You can set this variables when running the image to override the host name or
 # foward the messages to another server

@@ -30,13 +30,18 @@ RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
     apk add --update \
         bash busybox-extras \
         ca-certificates\
+        mailx heirloom-mailx \
+        rsyslog \
+        supervisor
+
+RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
+    apk update -U && \
+    apk add --update \
         cyrus-sasl cyrus-sasl-dev  cyrus-sasl-crammd5 cyrus-sasl-login cyrus-sasl-digestmd5 cyrus-sasl-scram \
         cyrus-sasl-gssapiv2 cyrus-sasl-gs2 cyrus-sasl-openrc cyrus-sasl-ntlm \
         libgsasl libsasl lmdb lmdb-tools \
         mailx heirloom-mailx \
-        postfix \
-        rsyslog \
-        supervisor
+        postfix
 
 RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
     apk update -U && \

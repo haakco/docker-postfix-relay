@@ -43,9 +43,11 @@ jobs:
           push: true
           build-args: |
             BASE_IMAGE_NAME=alpine
-            BASE_IMAGE_TAG=edge
-#          platforms: linux/amd64,linux/arm64
+            BASE_IMAGE_TAG=latest
+          platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=haakco/postfix-relay:buildcache
+          cache-to: type=registry,ref=haakco/postfix-relay:buildcache,mode=max
+#          cache-from: type=gha
+#          cache-to: type=gha,mode=max

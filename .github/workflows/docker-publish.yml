@@ -43,7 +43,7 @@ jobs:
           push: true
           build-args: |
             BASE_IMAGE_NAME=alpine
-            BASE_IMAGE_TAG=latest
+            BASE_IMAGE_TAG=edge
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

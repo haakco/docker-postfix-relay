@@ -6,7 +6,7 @@ export SCRIPT_DIR
 
 ## Build args
 export BASE_IMAGE_NAME="alpine"
-export BASE_IMAGE_TAG="latest"
+export BASE_IMAGE_TAG="edge"
 
 export BUILD_IMAGE_NAME="haakco/postfix-relay"
 export BUILD_IMAGE_TAG="latest"

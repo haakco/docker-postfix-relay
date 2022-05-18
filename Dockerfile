@@ -26,6 +26,7 @@ ARG HTTPS_PROXY=""
 ARG HTTP_PROXY=""
 
 RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
+    apk update -U && \
     apk add -U \
         bash busybox-extras \
         ca-certificates \

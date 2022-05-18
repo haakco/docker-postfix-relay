@@ -36,7 +36,7 @@ RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
 
 RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
     apk update -U && \
-    apk add --update \
+    apk add \
         cyrus-sasl cyrus-sasl-dev  cyrus-sasl-crammd5 cyrus-sasl-login cyrus-sasl-digestmd5 cyrus-sasl-scram \
         cyrus-sasl-gssapiv2 cyrus-sasl-gs2 cyrus-sasl-openrc cyrus-sasl-ntlm \
         libgsasl libsasl lmdb lmdb-tools \
@@ -45,7 +45,7 @@ RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
 
 RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
     apk update -U && \
-    apk add --update \
+    apk add \
         pcre icu-libs \
         db libpq \
         libsasl \

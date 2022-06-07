@@ -47,7 +47,7 @@ jobs:
           build-args: |
             BASE_IMAGE_NAME=alpine
             BASE_IMAGE_TAG=latest
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64,linux/arm64/v8
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=haakco/postfix-relay:buildcache

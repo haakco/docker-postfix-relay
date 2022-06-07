@@ -20,9 +20,9 @@ export CACHE_FROM="${CACHE_FROM} --cache-to=type=registry,ref=${BUILD_IMAGE_NAME
 BUILD_TYPE_FLAG=" --push "
 export BUILD_TYPE_FLAG
 
-export PLATFORM=" --platform  linux/amd64,linux/arm64 "
+export PLATFORM=" --platform  linux/amd64,linux/arm64/v8 "
 #export PLATFORM=" --platform  linux/amd64 "
-#export PLATFORM=" --platform linux/arm64 "
+#export PLATFORM=" --platform linux/arm64/v8 "
 
 CMD='docker buildx build '"${PLATFORM}"' '"${BUILD_TYPE_FLAG}"' '"${CACHE_FROM}"' --rm --file '"${DOCKER_FILE}"' -t '"${BUILD_IMAGE_NAME}:${BUILD_IMAGE_TAG}"' '"${EXTRA_FLAG}"' .'
 

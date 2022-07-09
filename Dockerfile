@@ -19,7 +19,7 @@ ARG BASE_IMAGE_TAG=""
 ENV LANG="en_US.UTF-8" \
     LC_ALL="en_US.UTF-8" \
     LANGUAGE="en_US.UTF-8" \
-    TZ="Africa/Johannesburg" \
+    TZ="UTC" \
     TERM="xterm"
 
 ARG HTTPS_PROXY=""

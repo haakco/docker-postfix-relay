@@ -25,23 +25,20 @@ ENV LANG="en_US.UTF-8" \
 ARG HTTPS_PROXY=""
 ARG HTTP_PROXY=""
 
-RUN --mount=type=cache,sharing=locked,id=apk$(arch),target=/var/cache/apk \
-    apk update -U && \
+RUN apk update -U && \
     apk add -U \
         bash busybox-extras \
         ca-certificates \
-        mailx heirloom-mailx \
-        rsyslog \
-        supervisor \
-        cyrus-sasl cyrus-sasl-dev  cyrus-sasl-crammd5 cyrus-sasl-login cyrus-sasl-digestmd5 cyrus-sasl-scram \
+        cyrus-sasl cyrus-sasl-dev cyrus-sasl-crammd5 cyrus-sasl-login cyrus-sasl-digestmd5 cyrus-sasl-scram \
         cyrus-sasl-gssapiv2 cyrus-sasl-gs2 cyrus-sasl-openrc cyrus-sasl-ntlm \
-        libgsasl libsasl lmdb lmdb-tools \
-        mailx heirloom-mailx \
-        postfix \
-        pcre icu-libs \
         db libpq \
-        libsasl \
-        libldap
+        libgsasl libsasl lmdb lmdb-tools \
+        libldap \
+        mailx \
+        pcre icu-libs \
+        postfix \
+        rsyslog \
+        supervisor
 
 COPY ./files/supervisord.conf /supervisord.conf
 COPY ./files/rsyslog.conf /etc/rsyslog.conf

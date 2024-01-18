@@ -8,7 +8,7 @@ export SCRIPT_DIR
 export BASE_IMAGE_NAME="alpine"
 export BASE_IMAGE_TAG="latest"
 
-export BUILD_IMAGE_NAME="haakco/postfix-relay"
+export BUILD_IMAGE_NAME="ghcr.io/haakco/postfix-relay"
 export BUILD_IMAGE_TAG="latest"
 
 EXTRA_FLAG="${EXTRA_FLAG} --build-arg BASE_IMAGE_NAME=${BASE_IMAGE_NAME}"

@@ -15,16 +15,7 @@ permissions:
 jobs:
   push_to_registry:
     name: Push Docker image ghcr.io/haakco/postfix-relay to Docker Hub
-    runs-on: haakco-build
-    container:
-      image: ghcr.io/haakco/actions-runner:1
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-      options: --user root
-    env:
-      BUILDX_BUILDER_NAME: htz-containerd-buildkit
-      BUILDX_CLUSTER_ENDPOINTS: tcp://buildkitd-0.buildkitd-headless.ga-ss-haakco.svc.cluster.local:1234,tcp://buildkitd-1.buildkitd-headless.ga-ss-haakco.svc.cluster.local:1234,tcp://buildkitd-2.buildkitd-headless.ga-ss-haakco.svc.cluster.local:1234
+    runs-on: "self-hosted"
     steps:
       - name: Check out the repo
         uses: actions/checkout@v7
@@ -48,23 +39,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
-      - name: Set up remote Buildx
-        shell: bash
-        run: |
-          set -euo pipefail
-          IFS=',' read -r -a endpoints <<< "$BUILDX_CLUSTER_ENDPOINTS"
-          docker buildx create --name "$BUILDX_BUILDER_NAME" --driver remote "${endpoints[0]}" --use
-          for endpoint in "${endpoints[@]:1}"; do
-            docker buildx create --name "$BUILDX_BUILDER_NAME" --append --driver remote "$endpoint"
-          done
-          docker buildx inspect --bootstrap
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
         with:
           driver-opts: |
             network=host
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
         with:
-          builder: ${{ env.BUILDX_BUILDER_NAME }}
           context: .
           push: true
           build-args: |

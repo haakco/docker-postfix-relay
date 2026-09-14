@@ -15,7 +15,7 @@ permissions:
 jobs:
   push_to_registry:
     name: Push Docker image ghcr.io/haakco/postfix-relay to Docker Hub
-    runs-on: "self-hosted"
+    runs-on: [self-hosted, haakco]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v7
